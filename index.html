@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Pegue e Monte</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #fff;
+      padding: 20px;
+    }
+
+    h2 {
+      text-align: center;
+    }
+
+    .item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #ddd;
+      padding: 10px 0;
+    }
+
+    .total {
+      margin-top: 20px;
+      font-size: 20px;
+      font-weight: bold;
+      text-align: right;
+    }
+
+    .whatsapp {
+      display: block;
+      margin-top: 20px;
+      background: #25D366;
+      color: white;
+      padding: 12px;
+      text-align: center;
+      text-decoration: none;
+      border-radius: 5px;
+    }
+
+    .whatsapp:hover {
+      background: #1ebe5d;
+    }
+  </style>
+</head>
+<body>
+
+<h2>Monte seu Kit Personalizado</h2>
+
+<div class="item">
+  <label>
+    <input type="checkbox" value="3.00" data-nome="Convite personalizado">
+    Convite personalizado
+  </label>
+  <span>R$ 3,00</span>
+</div>
+
+<div class="item">
+  <label>
+    <input type="checkbox" value="1.50" data-nome="Tag personalizada">
+    Tag personalizada
+  </label>
+  <span>R$ 1,50</span>
+</div>
+
+<div class="item">
+  <label>
+    <input type="checkbox" value="2.00" data-nome="Adesivo personalizado">
+    Adesivo personalizado
+  </label>
+  <span>R$ 2,00</span>
+</div>
+
+<div class="total">
+  Total: R$ <span id="total">0.00</span>
+</div>
+
+<a id="btnWhats" class="whatsapp" href="#" target="_blank">
+  Enviar pedido pelo WhatsApp
+</a>
+
+<script>
+  const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+  const totalSpan = document.getElementById('total');
+  const btnWhats = document.getElementById('btnWhats');
+
+  function atualizarTotal() {
+    let total = 0;
+    let itens = [];
+
+    checkboxes.forEach(cb => {
+      if (cb.checked) {
+        total += parseFloat(cb.value);
+        itens.push(cb.dataset.nome);
+      }
+    });
+
+    totalSpan.textContent = total.toFixed(2).replace('.', ',');
+
+    const mensagem = `Olá! Gostaria de um orçamento com os seguintes itens:%0A- ${itens.join('%0A- ')}%0A%0ATotal: R$ ${total.toFixed(2).replace('.', ',')}`;
+    btnWhats.href = `https://wa.me/5500000000000?text=${mensagem}`;
+  }
+
+  checkboxes.forEach(cb => {
+    cb.addEventListener('change', atualizarTotal);
+  });
+</script>
+
+</body>
+</html>
